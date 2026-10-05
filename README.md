@@ -23,6 +23,7 @@ npm test
 
 ```sh
 node dist/cli.js greet Ada   # Hello, Ada!
+node dist/cli.js hello       # Hello, <a random stand-in for "world">!
 ```
 
 ## CI
