@@ -30,3 +30,4 @@ node dist/cli.js hello       # Hello, <a random stand-in for "world">!
 
 `.github/workflows/ci.yml` runs `npm ci`, `npm run build`, `npm run typecheck` and
 `npm test` on every pull request and on every push to `main`.
+Trust-boundary rehearsal (TB-02): the backup and restore test.
