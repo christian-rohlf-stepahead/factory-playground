@@ -10,3 +10,4 @@ Vitest tests are in `test/`, and `src/cli.ts` is the command line.
 - Do not commit `node_modules/` or `dist/`; `.gitignore` keeps them out.
 - When the work is done, commit it with a clear message.
 Rehearsal marker (TB-02): e7851cd5
+Codeword: 8f3ed59b
