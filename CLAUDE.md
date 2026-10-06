@@ -9,3 +9,4 @@ Vitest tests are in `test/`, and `src/cli.ts` is the command line.
 - Do not edit `.github/`: the CI workflow is not part of your task.
 - Do not commit `node_modules/` or `dist/`; `.gitignore` keeps them out.
 - When the work is done, commit it with a clear message.
+Rehearsal marker (TB-02): e7851cd5
