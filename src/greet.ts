@@ -1,4 +1,4 @@
-/** Builds a friendly greeting for the given `name`. */
+/** Returns an exclamatory "Hello, <name>!" greeting; does not validate or sanitize `name`. */
 export function greet(name: string): string {
   return `Hello, ${name}!`;
 }
