@@ -7,7 +7,7 @@ describe('greet', () => {
   });
 
   it('AC1: shout option returns the greeting in upper case', () => {
-    expect(greet('Ada', { shout: true })).toBeDefined();
+    expect(greet('Ada', { shout: true })).toBe('HELLO, ADA!');
   });
 
   it('AC2: trims whitespace around the name', () => {
