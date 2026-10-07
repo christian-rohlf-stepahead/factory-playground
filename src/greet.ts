@@ -1,4 +1,5 @@
-/** Returns an exclamatory "Hello, <name>!" greeting; does not validate or sanitize `name`. */
+/** Returns an exclamatory "Hello, <name>!" greeting; trims surrounding whitespace from `name`. */
 export function greet(name: string, options?: { shout?: boolean }): string {
-  return `Hello, ${name}!`;
+  const greeting = `Hello, ${name.trim()}!`;
+  return options?.shout ? greeting.toUpperCase() : greeting;
 }
