@@ -18,7 +18,12 @@ describe('greet', () => {
     expect(greet('  Ada ', { lang: 'fr' })).toBe('Bonjour, Ada!');
   });
 
-  it('AC4/AC8: shout composes with lang "fr" to return an upper-case French greeting', () => {
+  it('AC4: shout composes with lang "fr" to return an upper-case French greeting', () => {
+    expect(greet('Ada', { shout: true, lang: 'fr' })).toBe('BONJOUR, ADA!');
+  });
+
+  it('AC8: French behaviour is covered in both normal and shout form', () => {
+    expect(greet('Ada', { lang: 'fr' })).toBe('Bonjour, Ada!');
     expect(greet('Ada', { shout: true, lang: 'fr' })).toBe('BONJOUR, ADA!');
   });
 

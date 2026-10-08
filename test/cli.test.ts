@@ -6,10 +6,12 @@ const repoRoot = path.resolve(import.meta.dirname, '..');
 const cliPath = path.join(repoRoot, 'dist', 'cli.js');
 
 function runCli(args: string[]): { stdout: string; stderr: string; status: number } {
+  const env = { ...process.env, NO_COLOR: '1' };
   try {
     const stdout = execFileSync(process.execPath, [cliPath, ...args], {
       cwd: repoRoot,
       encoding: 'utf8',
+      env,
     });
     return { stdout, stderr: '', status: 0 };
   } catch (error) {
@@ -29,9 +31,15 @@ describe('playground-is CLI', () => {
     });
   }, 30_000);
 
-  it('AC1/AC9: "greet" with no --lang still prints the unchanged English greeting', () => {
+  it('AC1: "greet" with no --lang still prints the unchanged English greeting', () => {
     const { stdout, status } = runCli(['greet', 'Ada']);
     expect(stdout.trim()).toBe('Hello, Ada!');
+    expect(status).toBe(0);
+  });
+
+  it('AC9: the pre-existing "hello" CLI behaviour is unchanged', () => {
+    const { stdout, status } = runCli(['hello']);
+    expect(stdout.trim()).toMatch(/^Hello, (world|earth|globe|planet|universe)!$/);
     expect(status).toBe(0);
   });
 
