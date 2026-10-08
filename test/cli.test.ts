@@ -59,4 +59,10 @@ describe('playground-is CLI', () => {
     const { stderr } = runCli([]);
     expect(stderr).toContain('--lang');
   });
+
+  it('AC1: "farewell --lang it" prints an Italian farewell', () => {
+    const { stdout, status } = runCli(['farewell', '--lang', 'it', 'Ada']);
+    expect(stdout.trim()).toBe('Arrivederci, Ada!');
+    expect(status).toBe(0);
+  });
 });

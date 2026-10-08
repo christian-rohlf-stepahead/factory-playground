@@ -2,17 +2,19 @@
 import pc from 'picocolors';
 import { red } from 'kleur/colors';
 import { greet } from './greet.js';
+import { farewell } from './farewell.js';
 import { randomWord, WORLD_WORDS_FR } from './words.js';
 
-const USAGE = 'usage: node dist/cli.js greet <name> [--lang fr] | hello [--lang fr]';
+const USAGE = 'usage: node dist/cli.js greet <name> [--lang fr] | hello [--lang fr] | farewell <name> [--lang it]';
 
-function parseLang(args: string[]): { lang: 'en' | 'fr'; rest: string[] } {
+function parseLang<L extends string>(args: string[], allowed: readonly L[]): { lang: 'en' | L; rest: string[] } {
   const rest: string[] = [];
-  let lang: 'en' | 'fr' = 'en';
+  let lang: 'en' | L = 'en';
   for (let i = 0; i < args.length; i += 1) {
     if (args[i] === '--lang') {
       i += 1;
-      lang = args[i] === 'fr' ? 'fr' : 'en';
+      const value = args[i];
+      lang = (allowed as readonly string[]).includes(value) ? (value as L) : 'en';
     } else {
       rest.push(args[i]);
     }
@@ -24,7 +26,7 @@ const [command, ...rawArgs] = process.argv.slice(2);
 
 switch (command) {
   case 'greet': {
-    const { lang, rest } = parseLang(rawArgs);
+    const { lang, rest } = parseLang(rawArgs, ['fr'] as const);
     if (rest.length === 0) {
       console.error(red(USAGE));
       process.exitCode = 2;
@@ -34,9 +36,19 @@ switch (command) {
     break;
   }
   case 'hello': {
-    const { lang } = parseLang(rawArgs);
+    const { lang } = parseLang(rawArgs, ['fr'] as const);
     const name = lang === 'fr' ? randomWord(WORLD_WORDS_FR) : randomWord();
     console.log(pc.green(greet(name, { lang })));
+    break;
+  }
+  case 'farewell': {
+    const { lang, rest } = parseLang(rawArgs, ['it'] as const);
+    if (rest.length === 0) {
+      console.error(red(USAGE));
+      process.exitCode = 2;
+    } else {
+      console.log(pc.green(farewell(rest.join(' '), { lang })));
+    }
     break;
   }
   default:
