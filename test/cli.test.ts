@@ -65,4 +65,40 @@ describe('playground-is CLI', () => {
     expect(stdout.trim()).toBe('Arrivederci, Ada!');
     expect(status).toBe(0);
   });
+
+  it('AC2: "greet --lang pl" prints the Polish greeting', () => {
+    const { stdout, status } = runCli(['greet', '--lang', 'pl', 'Ada']);
+    expect(stdout.trim()).toBe('Cześć, Ada!');
+    expect(status).toBe(0);
+  });
+
+  it('AC5: "hello --lang pl" prints a fully Polish line with a Polish stand-in word', () => {
+    const { stdout, status } = runCli(['hello', '--lang', 'pl']);
+    expect(stdout.trim()).toMatch(/^Cześć, (świat|ziemia|kula ziemska|planeta|wszechświat)!$/);
+    expect(status).toBe(0);
+  });
+
+  it('AC7: the usage text mentions the pl value for --lang', () => {
+    const { stderr } = runCli([]);
+    expect(stderr).toContain('pl');
+  });
+
+  it('AC8: "farewell --lang pl" prints the Polish farewell, and "--lang it" / no option still print their existing unchanged text', () => {
+    const polish = runCli(['farewell', '--lang', 'pl', 'Ada']);
+    expect(polish.stdout.trim()).toBe('Do widzenia, Ada!');
+    expect(polish.status).toBe(0);
+
+    const italian = runCli(['farewell', '--lang', 'it', 'Ada']);
+    expect(italian.stdout.trim()).toBe('Arrivederci, Ada!');
+    expect(italian.status).toBe(0);
+
+    const english = runCli(['farewell', 'Ada']);
+    expect(english.stdout.trim()).toBe('Goodbye, Ada!');
+    expect(english.status).toBe(0);
+  });
+
+  it('AC10: the farewell usage text mentions the pl value for --lang', () => {
+    const { stderr } = runCli([]);
+    expect(stderr).toContain('pl');
+  });
 });

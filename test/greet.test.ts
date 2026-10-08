@@ -40,4 +40,33 @@ describe('greet', () => {
     logSpy.mockRestore();
     writeSpy.mockRestore();
   });
+
+  it('AC3: lang "pl" option returns a Polish greeting and still trims whitespace', () => {
+    expect(greet('  Ada ', { lang: 'pl' })).toBe('Cześć, Ada!');
+  });
+
+  it('AC4: shout composes with lang "pl" to return an upper-case Polish greeting', () => {
+    expect(greet('Ada', { shout: true, lang: 'pl' })).toBe('CZEŚĆ, ADA!');
+  });
+
+  it('AC6: performs no console or process I/O and only returns a string when asked for Polish', () => {
+    const logSpy = vi.spyOn(console, 'log').mockImplementation(() => undefined);
+    const writeSpy = vi.spyOn(process.stdout, 'write').mockImplementation(() => true);
+
+    const result = greet('Ada', { lang: 'pl' });
+
+    expect(typeof result).toBe('string');
+    expect(logSpy).not.toHaveBeenCalled();
+    expect(writeSpy).not.toHaveBeenCalled();
+
+    logSpy.mockRestore();
+    writeSpy.mockRestore();
+  });
+
+  it('AC11: Polish greet behaviour is covered in both normal and shout form, alongside the unchanged English and French behaviour', () => {
+    expect(greet('Ada')).toBe('Hello, Ada!');
+    expect(greet('Ada', { lang: 'fr' })).toBe('Bonjour, Ada!');
+    expect(greet('Ada', { lang: 'pl' })).toBe('Cześć, Ada!');
+    expect(greet('Ada', { shout: true, lang: 'pl' })).toBe('CZEŚĆ, ADA!');
+  });
 });

@@ -3,9 +3,10 @@ import pc from 'picocolors';
 import { red } from 'kleur/colors';
 import { greet } from './greet.js';
 import { farewell } from './farewell.js';
-import { randomWord, WORLD_WORDS_FR } from './words.js';
+import { randomWord, WORLD_WORDS_FR, WORLD_WORDS_PL } from './words.js';
 
-const USAGE = 'usage: node dist/cli.js greet <name> [--lang fr] | hello [--lang fr] | farewell <name> [--lang it]';
+const USAGE =
+  'usage: node dist/cli.js greet <name> [--lang fr|pl] | hello [--lang fr|pl] | farewell <name> [--lang it|pl]';
 
 function parseLang<L extends string>(args: string[], allowed: readonly L[]): { lang: 'en' | L; rest: string[] } {
   const rest: string[] = [];
@@ -26,7 +27,7 @@ const [command, ...rawArgs] = process.argv.slice(2);
 
 switch (command) {
   case 'greet': {
-    const { lang, rest } = parseLang(rawArgs, ['fr'] as const);
+    const { lang, rest } = parseLang(rawArgs, ['fr', 'pl'] as const);
     if (rest.length === 0) {
       console.error(red(USAGE));
       process.exitCode = 2;
@@ -36,13 +37,13 @@ switch (command) {
     break;
   }
   case 'hello': {
-    const { lang } = parseLang(rawArgs, ['fr'] as const);
-    const name = lang === 'fr' ? randomWord(WORLD_WORDS_FR) : randomWord();
+    const { lang } = parseLang(rawArgs, ['fr', 'pl'] as const);
+    const name = lang === 'fr' ? randomWord(WORLD_WORDS_FR) : lang === 'pl' ? randomWord(WORLD_WORDS_PL) : randomWord();
     console.log(pc.green(greet(name, { lang })));
     break;
   }
   case 'farewell': {
-    const { lang, rest } = parseLang(rawArgs, ['it'] as const);
+    const { lang, rest } = parseLang(rawArgs, ['it', 'pl'] as const);
     if (rest.length === 0) {
       console.error(red(USAGE));
       process.exitCode = 2;
