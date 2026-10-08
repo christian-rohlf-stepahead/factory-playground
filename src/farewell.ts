@@ -1,6 +1,6 @@
 const FAREWELL_WORD: Record<'en' | 'it', string> = {
   en: 'Goodbye',
-  it: 'Goodbye',
+  it: 'Arrivederci',
 };
 
 /** Returns a "Goodbye, <name>!" farewell (or an Italian farewell for `lang: 'it'`); trims surrounding whitespace from `name`. */
