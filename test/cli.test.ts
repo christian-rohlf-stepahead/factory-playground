@@ -101,4 +101,46 @@ describe('playground-is CLI', () => {
     const { stderr } = runCli([]);
     expect(stderr).toContain('pl');
   });
+
+  it('AC12: "greet --shout" prints the English greeting in upper case', () => {
+    const { stdout, status } = runCli(['greet', '--shout', 'Ada']);
+    expect(stdout.trim()).toBe('HELLO, ADA!');
+    expect(status).toBe(0);
+  });
+
+  it('AC13: "greet --shout --lang fr" prints the French greeting in upper case', () => {
+    const { stdout, status } = runCli(['greet', '--shout', '--lang', 'fr', 'Ada']);
+    expect(stdout.trim()).toBe('BONJOUR, ADA!');
+    expect(status).toBe(0);
+  });
+
+  it('AC14: "greet Ada --shout" parses --shout after the name too', () => {
+    const { stdout, status } = runCli(['greet', 'Ada', '--shout']);
+    expect(stdout.trim()).toBe('HELLO, ADA!');
+    expect(status).toBe(0);
+  });
+
+  it('AC15: "hello --shout" prints the random stand-in greeting in upper case', () => {
+    const { stdout, status } = runCli(['hello', '--shout']);
+    expect(stdout.trim()).toMatch(/^HELLO, (WORLD|EARTH|GLOBE|PLANET|UNIVERSE)!$/);
+    expect(status).toBe(0);
+  });
+
+  it('AC16: "hello --shout --lang pl" prints the Polish random stand-in greeting in upper case', () => {
+    const { stdout, status } = runCli(['hello', '--shout', '--lang', 'pl']);
+    expect(stdout.trim()).toMatch(/^CZEŚĆ, (ŚWIAT|ZIEMIA|KULA ZIEMSKA|PLANETA|WSZECHŚWIAT)!$/);
+    expect(status).toBe(0);
+  });
+
+  it('AC17: "farewell --shout" does not upper-case (--shout only affects the greeting)', () => {
+    const { stdout, status } = runCli(['farewell', '--shout', 'Ada']);
+    expect(stdout.trim()).toBe('Goodbye, Ada!');
+    expect(status).toBe(0);
+  });
+
+  it('AC18: "greet" without --shout is unchanged', () => {
+    const { stdout, status } = runCli(['greet', 'Ada']);
+    expect(stdout.trim()).toBe('Hello, Ada!');
+    expect(status).toBe(0);
+  });
 });
