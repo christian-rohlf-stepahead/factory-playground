@@ -6,7 +6,7 @@ import { farewell } from './farewell.js';
 import { randomWord, WORLD_WORDS_FR, WORLD_WORDS_PL } from './words.js';
 
 const USAGE =
-  'usage: node dist/cli.js greet <name> [--lang fr|pl] | hello [--lang fr|pl] | farewell <name> [--lang it|pl]';
+  'usage: node dist/cli.js greet <name> [--lang fr|pl] [--shout] | hello [--lang fr|pl] [--shout] | farewell <name> [--lang it|pl]';
 
 function parseShout(args: string[]): { shout: boolean; rest: string[] } {
   const rest: string[] = [];

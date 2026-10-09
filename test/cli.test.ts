@@ -143,4 +143,9 @@ describe('playground-is CLI', () => {
     expect(stdout.trim()).toBe('Hello, Ada!');
     expect(status).toBe(0);
   });
+
+  it('AC19: the usage text mentions the --shout option', () => {
+    const { stderr } = runCli([]);
+    expect(stderr).toContain('--shout');
+  });
 });
